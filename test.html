@@ -69,18 +69,18 @@
         testArray.push(Math.random() * TEST_MAX_VALUE);
       }
       //run the tests
-  		var algorithms = ['INSERT', 'SELECTION', 'MERGE', 'HEAP'];
-      var runtimes = ['n^2', 'n^2', 'n log(n)', 'n log(n)'];
-      for (var i = 0; i < algorithms.length; ++i) {
+  		var ALGORITHMS = ['INSERT', 'SELECTION', 'MERGE', 'HEAP'];
+      var RUNTIMES = ['n^2', 'n^2', 'n log(n)', 'n log(n)'];
+      for (var i = 0; i < ALGORITHMS.length; ++i) {
         var testArrayCopy = testArray.clone();
         var startTime = new Date().getTime();
-        var sortedArr = sort(algorithms[i], testArrayCopy);
+        var sortedArr = sort(ALGORITHMS[i], testArrayCopy);
         var endTime = new Date().getTime();
         var isArraySorted = isSorted(sortedArr);
         $tr = $('<tr/>');
-        $tr.append($('<td/>').html(algorithms[i]))
-          .append($('<td/>').html(runtimes[i]))
-          .append($('<td/>').html(endTime-startTime))
+        $tr.append($('<td/>').html(ALGORITHMS[i]))
+          .append($('<td/>').html(RUNTIMES[i]))
+          .append($('<td/>').html(endTime - startTime))
           .append($('<td/>').html(isArraySorted ? "Yes" : "No").addClass(isArraySorted ? "passed" : "failed"))
         $('tbody').append($tr);
         testArrayCopy = null;
