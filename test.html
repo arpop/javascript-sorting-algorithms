@@ -45,7 +45,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script src="assets/js/sort.js"></script>
   <script type='text/javascript'>
-  	$(document).ready(function () {
+    $(document).ready(function () {
       /**
        * Returns true if the array is sorted.
        *
@@ -69,7 +69,7 @@
         testArray.push(Math.random() * TEST_MAX_VALUE);
       }
       //run the tests
-  		var ALGORITHMS = ['INSERT', 'SELECTION', 'MERGE', 'HEAP'];
+      var ALGORITHMS = ['INSERT', 'SELECTION', 'MERGE', 'HEAP'];
       var RUNTIMES = ['n^2', 'n^2', 'n log(n)', 'n log(n)'];
       for (var i = 0; i < ALGORITHMS.length; ++i) {
         var testArrayCopy = testArray.clone();
@@ -85,20 +85,20 @@
         $('tbody').append($tr);
         testArrayCopy = null;
       }
-  	});
+    });
   </script>
 </head>
 
 <body>
   <table>
-  	<thead>
-  		<th>Algorithm</th>
-  		<th>Big-O Runtime</th>
-  		<th>Actual Runtime (ms)</th>
+    <thead>
+      <th>Algorithm</th>
+      <th>Big-O Runtime</th>
+      <th>Actual Runtime (ms)</th>
       <th>Passed Sorted Test</th>
-  	</thead>
-  	<tbody>
-  	</tbody>
+    </thead>
+    <tbody>
+    </tbody>
   </table>
 </body>
 </html>
