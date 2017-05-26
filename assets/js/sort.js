@@ -42,7 +42,7 @@ Array.prototype.clone = function() {
   return this.slice(0);
 };
 
-var sort = function (algo, arr) {
+var sort = function (algo, arr, property) {
   /**
    * Selection sorting algorithm.
    *
@@ -88,18 +88,19 @@ var sort = function (algo, arr) {
    * Merge sort algorithm.
    *
    * @param  {Array} arr array to be sorted
+   * @param  {String} name of the property to sort on
    * @return {Array}     sorted array
    */
-  function mergeSort (arr) {
+  function mergeSort (arr, property) {
     //step 1 - recursively divide array until we are down to a single element
     if (arr.length <= 1) {
       return arr;
     }
     var middleIndex = Math.floor(arr.length/2);
-    var leftSorted = mergeSort(arr.slice(0, middleIndex));
-    var rightSorted = mergeSort(arr.slice(middleIndex));
+    var leftSorted = mergeSort(arr.slice(0, middleIndex), property);
+    var rightSorted = mergeSort(arr.slice(middleIndex), property);
     //step 2 - merge the divided arrays
-    return merge(leftSorted, rightSorted);
+    return merge(leftSorted, rightSorted, property);
   }
 
   /**
@@ -109,13 +110,34 @@ var sort = function (algo, arr) {
    * @param  {Array} right right array to be merged
    * @return {Array}       sorted array
    */
-  function merge (left, right) {
+  function merge (left, right, property) {
+	  
     var sortedArr = [];
     //current left and right index being compared
     var leftInd = 0;
     var rightInd = 0;
     while (leftInd < left.length || rightInd < right.length) {
-      if (rightInd === right.length || left[leftInd] <= right[rightInd]) {
+		var leftValue = left[leftInd];
+		var rightValue = right[rightInd];
+		
+		
+		if (property != null || property != undefined){
+			try {
+				leftValue = left[leftInd][property];
+			} catch (e){
+				console.log("setting leftValue to undefined ", leftValue);
+				leftValue = undefined;
+			}
+			
+			try {
+				rightValue = right[rightInd][property];
+			} catch (e){
+				console.log("setting rightValue to undefined ", rightValue);
+				rightValue = undefined;
+			}
+		}
+		console.log("merge leftValue ", leftValue, " rightValue ", rightValue);
+      if (rightInd === right.length || leftValue <= rightValue) {
         sortedArr.push(left[leftInd]);
         ++leftInd;
       } else {
@@ -202,15 +224,17 @@ var sort = function (algo, arr) {
     }
   };
 
+  console.log("start array is ", arr);
+  
   switch (algo) {
     case "SELECTION":
-      return selectionSort(arr);
+      return selectionSort(arr, property);
     case "INSERT":
-      return insertSort(arr);
+      return insertSort(arr, property);
     case "MERGE":
-      return mergeSort(arr);
+      return mergeSort(arr, property);
     case "HEAP":
-      return new Heap(arr).sort();
+      return new Heap(arr, property).sort();
     default:
       throw "Sorting algorithm not found";
   }
