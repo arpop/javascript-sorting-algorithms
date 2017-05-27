@@ -4,8 +4,15 @@
  * @param  {Number} index one-base index
  * @return {Object}       element at index in array
  */
-Array.prototype.elem = function (index) {
-  return this[index-1];
+Array.prototype.elem = function (index, property) {
+	if (property == null || property == undefined)
+		return this[index-1];
+	else
+		try{
+			return this[index-1][property];
+		} catch (e){
+			return undefined;
+		}
 };
 
 /**
@@ -164,7 +171,8 @@ var sort = function (algo, arr, property) {
    * @constructor
    * @param {Array} arr array to be sorted
    */
-  function Heap (arr) {
+  function Heap (arr, property) {
+	  this.property = property;
     this.heapArray = arr.clone();
     //a few good attributes to know...
     this.heapSize = this.heapArray.length;
@@ -201,10 +209,10 @@ var sort = function (algo, arr, property) {
     var rightIndex = 2 * index + 1;
     var smallest = index;
     //look to see if left child or left child is less than parent
-    if (leftIndex <= this.heapSize && this.heapArray.elem(leftIndex) < this.heapArray.elem(smallest)) {
+    if (leftIndex <= this.heapSize && this.heapArray.elem(leftIndex, this.property) < this.heapArray.elem(smallest, this.property)) {
       smallest = leftIndex;
     }
-    if (rightIndex <= this.heapSize && this.heapArray.elem(rightIndex) < this.heapArray.elem(smallest)) {
+    if (rightIndex <= this.heapSize && this.heapArray.elem(rightIndex, this.property) < this.heapArray.elem(smallest, this.property)) {
       smallest = rightIndex;
     }
     //if left or right child was smaller than we have to heapify that node
