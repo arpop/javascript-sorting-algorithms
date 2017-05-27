@@ -73,10 +73,24 @@ var sort = function (algo, arr, property) {
    * @param  {Array} arr array to be sorted
    * @return {Array}     sorted array
    */
-  function insertSort (arr) {
+  function insertSort (arr, property) {
     for (var i = 1; i <= arr.length; i++) {
       for (var j = i-1; j >= 0; j--) {
-        if (arr[j+1] < arr[j]) {
+		  var nextJ = arr[j+1];
+		  var currJ = arr[j];
+		  if (property != null && property != undefined){
+			  try{
+				  nextJ = arr[j+1][property];
+			  }catch(e){
+				  nextJ = undefined;
+			  }
+			  try{
+				  currJ = arr[j][property];
+			  }catch(e){
+				  currJ = undefined;
+			  }
+		  }
+        if (nextJ < currJ) {
           arr.swap(j, j+1);
         }
       }
@@ -119,24 +133,19 @@ var sort = function (algo, arr, property) {
     while (leftInd < left.length || rightInd < right.length) {
 		var leftValue = left[leftInd];
 		var rightValue = right[rightInd];
-		
-		
 		if (property != null || property != undefined){
 			try {
 				leftValue = left[leftInd][property];
 			} catch (e){
-				console.log("setting leftValue to undefined ", leftValue);
 				leftValue = undefined;
 			}
 			
 			try {
 				rightValue = right[rightInd][property];
 			} catch (e){
-				console.log("setting rightValue to undefined ", rightValue);
 				rightValue = undefined;
 			}
 		}
-		console.log("merge leftValue ", leftValue, " rightValue ", rightValue);
       if (rightInd === right.length || leftValue <= rightValue) {
         sortedArr.push(left[leftInd]);
         ++leftInd;
@@ -223,8 +232,6 @@ var sort = function (algo, arr, property) {
       return this.sortedArray;
     }
   };
-
-  console.log("start array is ", arr);
   
   switch (algo) {
     case "SELECTION":
