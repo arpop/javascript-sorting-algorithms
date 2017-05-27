@@ -56,15 +56,37 @@ var sort = function (algo, arr, property) {
    * @param  {Array} arr array to be sorted
    * @return {Array}     sorted array
    */
-  function selectionSort (arr) {
+  function selectionSort (arr, property) {
     //visit every element in array
     for (var i = 0; i < arr.length; i++) {
       //find minimum in elements in i...n
       var min = arr[i];
+	  if (property != null && property != undefined){
+		try{
+		  min = arr[i][property];
+		}catch(e){
+		  min = undefined;
+		}
+	  }
       var minIndex = i;
       for (var j = i+1; j < arr.length; j++) {
-        if (arr[j] < min) {
-          min = arr[j];
+		var currValue = arr[j];
+		if (property != null && property != undefined){
+		  try{
+			currValue = arr[j][property];
+		  }catch(e){
+			currValue = undefined;
+		  }
+		}
+        if (currValue < min) {
+		  min = arr[j];
+		  if (property != null && property != undefined){
+		    try{
+			  min = arr[i][property];
+		    }catch(e){
+			  min = undefined;
+		    }
+		  }
           minIndex = j;
         }
       }
